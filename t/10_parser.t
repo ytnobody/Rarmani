@@ -3,7 +3,6 @@ use Test::More;
 use Test::Deep;
 
 use_ok 'Rarmani::Parser';
-use_ok 'Rarmani::Generator';
 
 my $parser = Rarmani::Parser->new;
 isa_ok $parser, 'Rarmani::Parser';
@@ -30,13 +29,6 @@ is join(' ', map {$_->name} @columns), 'id email name note created_at updated_at
 is join(' ', map {$_->datatype->name} @columns), 'StrLength StrLength StrLength Str DateTime DateTime';
 is join(' ', map {$_->not_null} @columns), '1 1 1 0 1 0';
 is join(' ', map {$_->length} @columns), '40 255 120 0 0 0';
-
-my $gen = Rarmani::Generator->new(tables => [@tables], path => ".");
-$gen->generate_schemas;
-
-ok -f 'MyApp/Schema/AdminAccount.pm';
-ok -f 'MyApp/Schema/Book.pm';
-ok -f 'MyApp/Schema/UserAccount.pm';
 
 done_testing;
 

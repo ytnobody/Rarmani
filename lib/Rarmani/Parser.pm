@@ -6,7 +6,7 @@ use Rarmani::Table;
 use Rarmani::Driver;
 use Rarmani::Column;
 
-has driver => (is => 'rw', isa => Str, default => "mysql");
+has driver => (is => 'rw', isa => Str, default => "MySQL");
 
 sub parse {
     my ($self, $sql) = @_;
@@ -31,6 +31,7 @@ sub _find_create_stmt {
     return {
         name    => $table_name,
         columns => [@columns],
+        driver  => $self->driver,
     };
 }
 
@@ -47,7 +48,7 @@ sub _find_column_definition {
         $match->{datatype} = uc($match->{datatype});
         $match->{options} = uc($match->{options}) if $match->{options};
         if (my %column_params = $driver->build_column($match)) {
-            $column = Rarmani::Column->new(%column_params);
+            $column = Rarmani::Column->new(%column_params, driver => $self->driver);
             push @columns, $column;
         }
         $sql =~ s/$pattern//;

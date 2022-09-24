@@ -1,7 +1,4 @@
 package Rarmani;
-use 5.008001;
-use strict;
-use warnings;
 use Moo;
 use namespace::clean;
 use Types::Standard -types;
@@ -18,7 +15,12 @@ has path      => (is => 'rw', isa => Str, default => '.');
 sub generate_schema_classes {
     my ($self, $sql) = @_;
     my @tables = $self->parser->parse($sql, $self->namespace);
-    my $gen    = Rarmani::Generator->new(tables => [@tables], namespace => $self->namespace, path => $self->path);
+    my $gen    = Rarmani::Generator->new(
+        tables    => [@tables], 
+        namespace => $self->namespace, 
+        path      => $self->path, 
+        driver    => $self->driver
+    );
     $gen->generate_schemas();
 }
 
@@ -34,7 +36,7 @@ Rarmani - Generates data schema classes that uses Moo (However incomplete)
 =head1 SYNOPSIS
 
     use Rarmani;
-    my $r = Rarmani->new(driver => 'mysql', schema_class => 'MyApp::Schema');
+    my $r = Rarmani->new(driver => 'MySQL', schema_class => 'MyApp::Schema');
     $r->generate_from_sql($sql_string);
     __DATA__
     CREATE TABLE 'books' (

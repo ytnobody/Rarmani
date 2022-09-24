@@ -1,4 +1,4 @@
-package Rarmani::Driver::mysql;
+package Rarmani::Driver::MySQL;
 use Moo;
 use namespace::clean;
 use Types::Standard -types;

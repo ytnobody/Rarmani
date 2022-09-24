@@ -10,8 +10,9 @@ use Carp ();
 
 our $TEMPLATE = do {local $/; <DATA>};
 
+has driver    => (is => 'ro', isa => Str, required => 1);
 has tables    => (is => 'rw', isa => ArrayRef[InstanceOf['Rarmani::Table']]);
-has namespace => (is => 'rw', isa => Str, default => 'MyApp::Schema');
+has namespace => (is => 'rw', isa => Str, required => 1);
 has path      => (is => 'rw', isa => Str, default => '.');
 
 sub generate_schemas {
@@ -54,6 +55,7 @@ sub table_as_schema_class {
         has_datetime  => $has_datetime,
         has_strlength => $has_strlength,
         columns       => $table->columns,
+        driver        => $self->driver,
     };
 
     my $tx = Text::Xslate->new(syntax => 'Kolon');
@@ -94,6 +96,7 @@ use namespace::clean;
 use Types::Standard -types;
 : if ($has_datetime) {
 use Types::DateTime -all;
+use DateTime::Format::<: $driver :>;
 : }
 : if ($has_strlength) {
 use Types::Common::String -types;

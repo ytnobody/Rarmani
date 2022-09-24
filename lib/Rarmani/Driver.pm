@@ -2,9 +2,9 @@ package Rarmani::Driver;
 use Moo;
 use namespace::clean;
 use Types::Standard -types;
-use Rarmani::Driver::mysql;
+use Rarmani::Driver::MySQL;
 
-has driver_type => (is => 'ro', isa => Str, default => 'mysql');
+has driver_type => (is => 'ro', isa => Str, default => 'MySQL');
 
 sub build_column {
     my ($self, $coldata) = @_;

@@ -3,7 +3,9 @@ use Moo;
 use namespace::clean;
 use Types::Standard -types;
 use Types::Common::Numeric -types;
+use Text::Xslate;
 
+has driver      => (is => 'ro', isa => Str, required => 1);
 has name        => (is => 'ro', isa => Str, required => 1);
 has datatype    => (is => 'ro', isa => InstanceOf['Type::Tiny'], required => 1);
 has foreign_key => (is => 'ro', isa => Str | Undef, required => 0, default => undef);
@@ -27,18 +29,24 @@ sub as_hashref {
 sub as_definition {
     my ($self) = @_;
     my $tmpl = <<'EOS';
-has %s => (
+has <: $self.name() :> => (
     is  => 'rw',
-    isa => %s,
+    isa => <: $self.as_column_type() | raw :>,
+: if $self.datatype().name() == "DateTime" {
+    coerce => 1,
+: }
 );
 
 EOS
+    my $tx = Text::Xslate->new(syntax => 'Kolon');
+    return $tx->render_string($tmpl, { self => $self });
     return sprintf($tmpl, $self->name, $self->as_column_type);
 }
 
 sub as_column_type {
     my ($self) = @_;
     return sprintf("%s[1,%d] | Undef", $self->datatype->name, $self->length) if $self->length > 0;
+    return sprintf("%s->plus_coercions(Format['%s']) | Undef", $self->datatype->name, $self->driver) if $self->datatype->name eq 'DateTime';
     return sprintf("%s | Undef", $self->datatype->name);
 }
 
