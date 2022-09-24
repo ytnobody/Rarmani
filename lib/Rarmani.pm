@@ -36,8 +36,9 @@ Rarmani - Generates data schema classes that uses Moo (However incomplete)
 =head1 SYNOPSIS
 
     use Rarmani;
-    my $r = Rarmani->new(driver => 'MySQL', schema_class => 'MyApp::Schema');
-    $r->generate_from_sql($sql_string);
+    my $r   = Rarmani->new(driver => 'MySQL', schema_class => 'MyApp::Schema');
+    my $sql = do {local $/; <DATA>};
+    $r->generate_from_sql($sql);
     __DATA__
     CREATE TABLE 'books' (
         `id`       INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
