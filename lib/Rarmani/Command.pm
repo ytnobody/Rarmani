@@ -25,12 +25,20 @@ option path => (
     doc      => 'Destination path of Schema class that be generated',
 );
 
+option roles => (
+    is       => 'ro', 
+    format   => 's@', 
+    required => 0, 
+    doc      => 'Roles that be applied to schema class',
+);
+
 sub generate {
     my ($self) = @_;
     my $r = Rarmani->new(
         driver    => $self->driver,
         namespace => $self->namespace,
         path      => $self->path,
+        roles     => $self->roles,
     );
     my $sql = do {local $/; <STDIN>};
     $r->generate_schema_classes($sql);

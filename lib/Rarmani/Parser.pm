@@ -7,6 +7,7 @@ use Rarmani::Driver;
 use Rarmani::Column;
 
 has driver => (is => 'rw', isa => Str, default => "MySQL");
+has roles  => (is => 'rw', isa => ArrayRef[Str], default => sub { [] });
 
 sub parse {
     my ($self, $sql) = @_;
@@ -32,6 +33,7 @@ sub _find_create_stmt {
         name    => $table_name,
         columns => [@columns],
         driver  => $self->driver,
+        roles   => $self->roles,
     };
 }
 

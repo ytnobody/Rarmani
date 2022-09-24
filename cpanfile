@@ -10,5 +10,6 @@ requires 'String::CamelCase', '0.04';
 
 on 'test' => sub {
     requires 'Test::More', '0.98';
+    requires 'Moo::Role::ToJSON', '0.02';
 };
 

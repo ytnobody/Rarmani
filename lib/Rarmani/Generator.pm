@@ -15,6 +15,7 @@ has driver    => (is => 'ro', isa => Str, required => 1);
 has tables    => (is => 'rw', isa => ArrayRef[InstanceOf['Rarmani::Table']]);
 has namespace => (is => 'rw', isa => Str, required => 1);
 has path      => (is => 'rw', isa => Str, default => '.');
+has roles     => (is => 'rw', isa => ArrayRef[Str], default => sub { [] });
 
 sub generate_schemas {
     my ($self) = @_;
@@ -33,10 +34,11 @@ sub generate_schema_class {
     open my $fh, '>', $path or Carp::croak($!);
     print $fh $source;
     close $fh;
-    my $cyan  = color('cyan');
-    my $green = color('green');
-    my $reset = color('reset');
-    printf($cyan."[generate]".$reset." ".$green."%s".$reset." --> %s\n", $self->schema_class_name($table, $self->namespace), $path);
+    my $cyan   = color('cyan');
+    my $green  = color('green');
+    my $yellow = color('yellow');
+    my $reset  = color('reset');
+    printf($cyan."[generate]".$reset." ".$green."%s".$reset." --> ".$yellow."%s".$reset."\n", $self->schema_class_name($table, $self->namespace), $path);
 }
 
 sub table_as_schema_class {
@@ -53,6 +55,7 @@ sub table_as_schema_class {
             $has_strlength = 1;
         }
     }
+    my @roles = @{$self->roles};
     my $params = {
         table         => $table->name,
         class_name    => $class_name,
@@ -60,6 +63,7 @@ sub table_as_schema_class {
         has_strlength => $has_strlength,
         columns       => $table->columns,
         driver        => $self->driver,
+        roles         => scalar(@roles) > 0 ? join(' ', @roles) : "",
     };
 
     my $tx = Text::Xslate->new(syntax => 'Kolon');
@@ -96,6 +100,9 @@ sub schema_class_file_path {
 __DATA__
 package <: $class_name :>;
 use Moo;
+: if ($roles) {
+with qw/<: $roles :>/;
+: }
 use namespace::clean;
 use Types::Standard -types;
 : if ($has_datetime) {
