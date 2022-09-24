@@ -3,6 +3,7 @@ use warnings;
 use Test::More;
 use Test::Exception;
 use Rarmani;
+use DateTime;
 
 my $sql = do {local $/; <DATA>};
 
@@ -32,6 +33,7 @@ lives_ok  { $admin1->note('') };
 lives_ok  { $admin1->created_at('2022-09-10 01:22:33') };
 lives_ok  { $admin1->created_at('2022/09/10 01:22:33') };
 throws_ok { $admin1->created_at('2022-09-10T01:22:33Z') } qr/did not pass type constraint/;
+lives_ok  { $admin1->created_at(DateTime->now) };
 
 done_testing;
 
