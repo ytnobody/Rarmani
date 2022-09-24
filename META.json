@@ -55,6 +55,7 @@
       },
       "test" : {
          "requires" : {
+            "Moo::Role::ToJSON" : "0.02",
             "Test::More" : "0.98"
          }
       }

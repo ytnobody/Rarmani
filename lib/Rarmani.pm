@@ -11,15 +11,18 @@ has driver    => (is => 'ro', isa => Str, required => 1);
 has parser    => (is => 'ro', isa => InstanceOf['Rarmani::Parser'], default => sub { Rarmani::Parser->new });
 has namespace => (is => 'rw', isa => Str, default => 'MyApp::Schema');
 has path      => (is => 'rw', isa => Str, default => '.');
+has roles     => (is => 'rw', isa => ArrayRef[Str], default => sub { [] });
 
 sub generate_schema_classes {
     my ($self, $sql) = @_;
+    $self->parser->roles($self->roles);
     my @tables = $self->parser->parse($sql, $self->namespace);
     my $gen    = Rarmani::Generator->new(
         tables    => [@tables], 
         namespace => $self->namespace, 
         path      => $self->path, 
-        driver    => $self->driver
+        driver    => $self->driver,
+        roles     => $self->roles,
     );
     $gen->generate_schemas();
 }
@@ -38,7 +41,7 @@ Rarmani - Generates data schema classes that uses Moo (However incomplete)
 in your generator script...
 
     use Rarmani;
-    my $r   = Rarmani->new(driver => 'MySQL', schema_class => 'MyApp::Schema');
+    my $r   = Rarmani->new(driver => 'MySQL', schema_class => 'MyApp::Schema', roles => [qw[Moo::Role::ToJSON MyApp::Roles::SomeOne]]);
     my $sql = do {local $/; <DATA>};
     $r->generate_from_sql($sql);
     __DATA__

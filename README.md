@@ -7,7 +7,7 @@ Rarmani - Generates data schema classes that uses Moo (However incomplete)
 in your generator script...
 
     use Rarmani;
-    my $r   = Rarmani->new(driver => 'MySQL', schema_class => 'MyApp::Schema');
+    my $r   = Rarmani->new(driver => 'MySQL', schema_class => 'MyApp::Schema', roles => [qw[Moo::Role::ToJSON MyApp::Roles::SomeOne]]);
     my $sql = do {local $/; <DATA>};
     $r->generate_from_sql($sql);
     __DATA__
