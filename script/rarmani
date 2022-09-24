@@ -1,0 +1,7 @@
+#!perl
+use strict;
+use warnings;
+use Rarmani::Command;
+
+my $cmd = Rarmani::Command->new_with_options;
+$cmd->generate;

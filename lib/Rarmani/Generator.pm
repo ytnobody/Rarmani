@@ -7,6 +7,7 @@ use String::CamelCase ();
 use File::Spec ();
 use File::Path ();
 use Carp ();
+use Term::ANSIColor;
 
 our $TEMPLATE = do {local $/; <DATA>};
 
@@ -32,7 +33,10 @@ sub generate_schema_class {
     open my $fh, '>', $path or Carp::croak($!);
     print $fh $source;
     close $fh;
-    warn sprintf("%s has been generated to %s", $self->schema_class_name($table, $self->namespace), $path);
+    my $cyan  = color('cyan');
+    my $green = color('green');
+    my $reset = color('reset');
+    printf($cyan."[generate]".$reset." ".$green."%s".$reset." --> %s\n", $self->schema_class_name($table, $self->namespace), $path);
 }
 
 sub table_as_schema_class {

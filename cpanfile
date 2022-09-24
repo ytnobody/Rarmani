@@ -1,6 +1,7 @@
 requires 'perl', '5.008001';
 requires 'namespace::clean', '0.27';
 requires 'Moo', '2.005004';
+requires 'MooX::Options', '4.103';
 requires 'Types::Standard', '1.016008';
 requires 'Types::DateTime', '0.0002';
 requires 'DateTime::Format::MySQL', '0.0701';

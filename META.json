@@ -44,6 +44,7 @@
          "requires" : {
             "DateTime::Format::MySQL" : "0.0701",
             "Moo" : "2.005004",
+            "MooX::Options" : "4.103",
             "String::CamelCase" : "0.04",
             "Text::Xslate" : "v3.5.9",
             "Types::DateTime" : "0.0002",
