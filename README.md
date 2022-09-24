@@ -29,6 +29,10 @@ and you can use generated schemas as followings.
         added_at => DateTime->now,
     );
 
+or you can use \`rarmani\` command instead.
+
+    rarmani --driver=MySQL --namespace=Charon::Schema --path=./myapp/lib/ < ./path/to/create_tables.sql
+
 # DESCRIPTION
 
 Rarmani is a magical "Japanese yew" for generate schema class that using Moo from SQL.

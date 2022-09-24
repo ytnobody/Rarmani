@@ -5,3 +5,32 @@ use Rarmani::Command;
 
 my $cmd = Rarmani::Command->new_with_options;
 $cmd->generate;
+
+__END__
+
+=encoding utf-8
+
+=head1 NAME
+
+rarmani - data schema generator
+
+=head1 SYNOPSIS
+
+    rarmani --driver=MySQL --namespace=Charon::Schema --path=./myapp/lib/ < ./path/to/create_tables.sql
+
+=head1 DESCRIPTION
+
+Rarmani is a magical "Japanese yew" for generate schema class that using Moo from SQL.
+
+=head1 LICENSE
+
+Copyright (C) ytnobody.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=head1 AUTHOR
+
+ytnobody E<lt>ytnobody@gmail.comE<gt>
+
+=cut
