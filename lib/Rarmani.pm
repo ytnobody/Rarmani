@@ -35,6 +35,8 @@ Rarmani - Generates data schema classes that uses Moo (However incomplete)
 
 =head1 SYNOPSIS
 
+in your generator script...
+
     use Rarmani;
     my $r   = Rarmani->new(driver => 'MySQL', schema_class => 'MyApp::Schema');
     my $sql = do {local $/; <DATA>};
@@ -45,6 +47,17 @@ Rarmani - Generates data schema classes that uses Moo (However incomplete)
         `name`     VARCHAR(250) NOT NULL,
         `author`   TEXT NOT NULL,
         `added_at` DATETIME NOT NULL
+    );
+
+and you can use generated schemas as followings.
+
+    use MyApp::Schema::Books;
+    use DateTime;
+    my $book = MyApp::Schema::Books->new(
+        id       => 10, 
+        name     => 'Perl Hacks', 
+        author   => 'chromatic, Damian Conway, Curtis "Ovid" Poe',
+        added_at => DateTime->now,
     );
 
 =head1 DESCRIPTION
