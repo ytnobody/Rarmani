@@ -1,6 +1,6 @@
 package Rarmani::Driver::MySQL;
-use Moo;
-use namespace::clean;
+use strict;
+use warnings;
 use Types::Standard -types;
 use Types::Common::String -types;
 use Types::DateTime -all;
