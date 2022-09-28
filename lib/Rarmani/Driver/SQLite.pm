@@ -1,4 +1,4 @@
-package Rarmani::Driver::MySQL;
+package Rarmani::Driver::SQLite;
 use strict;
 use warnings;
 use Types::Standard -types;
@@ -6,17 +6,16 @@ use Types::Common::String -types;
 use Types::DateTime -all;
 
 our @TypesMatcher = (
-    { type => Int,           regex => qr/^(INTEGER|INT|SMALLINT|TINYINT|MEDIUMINT|BIGINT)([\(\)0-9]+)?$/ },
-    { type => Num,           regex => qr/^(DECIMAL|NUMERIC|FLOAT|DOUBLE)([\(\)0-9]+)?/ },
-    { type => Str,           regex => qr/^(BINARY|VARBINARY|BLOB|TEXT)/ },
-    { type => StrLength      regex => qr/^(BIT|CHAR|VARCHAR)([\(\)0-9]+)?/ },
-    { type => DateTime,      regex => qr/^(DATE|DATETIME|TIMESTAMP|YEAR)/ },
-    { type => Enum,          regex => qr/^(ENUM([\(\).+]+)$)/ },
-    { type => ArrayRef[Str], regex => qr/^(SET([\(\).+]+))/ },
+    { type => Int, regex => qr/^(INTEGER)$/ },
+    { type => Num, regex => qr/^(NUMERIC)$/ },
+    { type => Bool, regex => qr/^(BOOL)$/ },
+    { type => Str, regex => qr/^(TEXT|REAL)$/ },
+    { type => DateTime, regex => qr/^(DATETIME)$/ },
+    { type => Any, regex => qr/^.*$/ },    
 );
 
 sub column_definition_rule {
-    return qr/(?<name>[`\w_]+) +(?<datatype>[\w\)\(0-9]+) *(?<options>[\w_ ]+)? *,?/is;
+    return qr/(?<name>`?[\w_]+`?) *(?<datatype>\w+)? *(?<options>[\w_\'\(\), ]+)? *,?/is;
 }
 
 sub build_column_params {
@@ -34,18 +33,18 @@ sub build_column_param {
     my $type     = $matcher->{type};
     my $regex    = $matcher->{regex};
     my $name     = $params{name};
-    my $datatype = $params{datatype};
+    my $datatype = $params{datatype} || "";
     my $options  = $params{options};
     
+    my $res_params;
+
     if (my ($typename, $length) = $datatype =~ $regex) {
-        $length =~ s/[\(\)]//g if defined $length;
-        $length //= 0;
         my $res_params = {
             datatype => $type, 
             name     => $name, 
             options  => $options,
             raw_type => $typename,
-            length   => 0+ $length,
+            length   => 0,
             not_null => 0,
         };
         $res_params = $class->resolve_options(%$res_params);

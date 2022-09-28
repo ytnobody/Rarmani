@@ -5,6 +5,7 @@ requires 'MooX::Options', '4.103';
 requires 'Types::Standard', '1.016008';
 requires 'Types::DateTime', '0.0002';
 requires 'DateTime::Format::MySQL', '0.0701';
+requires 'DateTime::Format::SQLite', '0.11';
 requires 'Text::Xslate', 'v3.5.9';
 requires 'String::CamelCase', '0.04';
 

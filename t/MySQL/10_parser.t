@@ -4,7 +4,7 @@ use Test::Deep;
 
 use_ok 'Rarmani::Parser';
 
-my $parser = Rarmani::Parser->new;
+my $parser = Rarmani::Parser->new(driver => 'MySQL');
 isa_ok $parser, 'Rarmani::Parser';
 
 my $sql = do {local $/; <DATA>};

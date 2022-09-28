@@ -3,13 +3,23 @@ use Moo;
 use namespace::clean;
 use Types::Standard -types;
 use Rarmani::Driver::MySQL;
+use Rarmani::Driver::SQLite;
 
-has driver_type => (is => 'ro', isa => Str, default => 'MySQL');
+has driver_type => (is => 'ro', isa => Str, required => 1);
+
+sub driver_class {
+    my ($self, $coldata) = @_;
+    return __PACKAGE__. '::'. $self->driver_type;
+}
 
 sub build_column {
     my ($self, $coldata) = @_;
-    my $driver_class = __PACKAGE__. '::'. $self->driver_type;
-    return $driver_class->build_column_params(%$coldata);
+    return $self->driver_class->build_column_params(%$coldata);
+}
+
+sub column_definition_rule {
+    my ($self, $coldata) = @_;
+    return $self->driver_class->column_definition_rule;
 }
 
 1;

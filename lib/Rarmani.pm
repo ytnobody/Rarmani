@@ -8,10 +8,16 @@ use Rarmani::Generator;
 our $VERSION = "0.01";
 
 has driver    => (is => 'ro', isa => Str, required => 1);
-has parser    => (is => 'ro', isa => InstanceOf['Rarmani::Parser'], default => sub { Rarmani::Parser->new });
+has parser    => (is => 'rw', isa => InstanceOf['Rarmani::Parser']);
 has namespace => (is => 'rw', isa => Str, default => 'MyApp::Schema');
 has path      => (is => 'rw', isa => Str, default => '.');
 has roles     => (is => 'rw', isa => ArrayRef[Str], default => sub { [] });
+
+around new => sub {
+    my ($orig, $class, %params) = @_;
+    $params{parser} ||= Rarmani::Parser->new(driver => $params{driver});
+    return $class->$orig(%params);
+};
 
 sub generate_schema_classes {
     my ($self, $sql) = @_;
@@ -65,7 +71,7 @@ and you can use generated schemas as followings.
 
 or you can use `rarmani` command instead.
 
-    rarmani --driver=MySQL --namespace=Charon::Schema --path=./myapp/lib/ < ./path/to/create_tables.sql
+    rarmani --driver=MySQL --namespace=YourApp::Schema --path=./myapp/lib/ < ./path/to/create_tables.sql
 
 =head1 DESCRIPTION
 

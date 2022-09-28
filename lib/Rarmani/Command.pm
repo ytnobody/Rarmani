@@ -29,6 +29,7 @@ option roles => (
     is       => 'ro', 
     format   => 's@', 
     required => 0, 
+    default  => sub { [] },
     doc      => 'Roles that be applied to schema class',
 );
 
