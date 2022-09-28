@@ -31,7 +31,7 @@ and you can use generated schemas as followings.
 
 or you can use \`rarmani\` command instead.
 
-    rarmani --driver=MySQL --namespace=Charon::Schema --path=./myapp/lib/ < ./path/to/create_tables.sql
+    rarmani --driver=MySQL --namespace=YourApp::Schema --path=./myapp/lib/ < ./path/to/create_tables.sql
 
 # DESCRIPTION
 

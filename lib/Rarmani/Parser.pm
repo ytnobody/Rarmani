@@ -6,7 +6,7 @@ use Rarmani::Table;
 use Rarmani::Driver;
 use Rarmani::Column;
 
-has driver => (is => 'rw', isa => Str, default => "MySQL");
+has driver => (is => 'rw', isa => Str, required => 1);
 has roles  => (is => 'rw', isa => ArrayRef[Str], default => sub { [] });
 
 sub parse {
@@ -42,18 +42,21 @@ sub _find_column_definition {
     my $match = +{};
     my @columns = ();
     my $column;
-    my $pattern = qr/(?<name>[`\w_]+) +(?<datatype>[\w\)\(0-9]+) *(?<options>[\w_ ]+)? *,?/is;
     my $driver = Rarmani::Driver->new(driver_type => $self->driver);
+    my $pattern = $driver->column_definition_rule;
     while ( $sql =~ $pattern ) {
         $match = +{%+};
         $match->{name} =~ s/[\"`]//g;
-        $match->{datatype} = uc($match->{datatype});
+        $match->{datatype} = uc($match->{datatype}) if $match->{datatype};
         $match->{options} = uc($match->{options}) if $match->{options};
         if (my %column_params = $driver->build_column($match)) {
             $column = Rarmani::Column->new(%column_params, driver => $self->driver);
+        # use Data::Dumper;
+        # warn Dumper([$column->name, $column->{datatype}->display_name]);
             push @columns, $column;
         }
         $sql =~ s/$pattern//;
+        # warn "---------------\n";
     }
     return @columns;
 }
