@@ -9,8 +9,6 @@ my $sql = do {local $/; <DATA>};
 
 my $r = Rarmani->new(driver => 'SQLite', namespace => 'MyCoolApp::Schema', roles => [qw[Moo::Role::ToJSON]]);
 $r->generate_schema_classes($sql);
-$r->path('../');
-$r->generate_schema_classes($sql);
 
 ok -f 'MyCoolApp/Schema/AdminAccount.pm';
 
