@@ -51,12 +51,9 @@ sub _find_column_definition {
         $match->{options} = uc($match->{options}) if $match->{options};
         if (my %column_params = $driver->build_column($match)) {
             $column = Rarmani::Column->new(%column_params, driver => $self->driver);
-        # use Data::Dumper;
-        # warn Dumper([$column->name, $column->{datatype}->display_name]);
             push @columns, $column;
         }
         $sql =~ s/$pattern//;
-        # warn "---------------\n";
     }
     return @columns;
 }
