@@ -1,7 +1,7 @@
 package Rarmani::Parser;
 use Moo;
 use namespace::clean;
-use Types::Standard -types;
+use Types::Common -types;
 use Rarmani::Table;
 use Rarmani::Driver;
 use Rarmani::Column;

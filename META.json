@@ -48,8 +48,8 @@
             "MooX::Options" : "4.103",
             "String::CamelCase" : "0.04",
             "Text::Xslate" : "v3.5.9",
+            "Type::Tiny" : "2.000001",
             "Types::DateTime" : "0.0002",
-            "Types::Standard" : "1.016008",
             "namespace::clean" : "0.27",
             "perl" : "5.008001"
          }

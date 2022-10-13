@@ -1,8 +1,7 @@
 package Rarmani::Driver::SQLite;
 use strict;
 use warnings;
-use Types::Standard -types;
-use Types::Common::String -types;
+use Types::Common -types;
 use Types::DateTime -all;
 
 our @TypesMatcher = (

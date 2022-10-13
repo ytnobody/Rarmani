@@ -1,7 +1,7 @@
 package Rarmani::Generator;
 use Moo;
 use namespace::clean;
-use Types::Standard -types;
+use Types::Common -types;
 use Text::Xslate;
 use String::CamelCase ();
 use File::Spec ();
@@ -45,14 +45,11 @@ sub table_as_schema_class {
     my ($self, $table, $namespace) = @_;
     my $class_name = $self->schema_class_name($table, $namespace);
     my $has_datetime = 0;
-    my $has_strlength = 0;
     for my $column (@{$table->columns}) {
         my $datatype = $column->datatype->name;
         if ($datatype eq 'DateTime') {
             $has_datetime = 1;
             last;
-        } elsif ($datatype =~ /^StrLength/) {
-            $has_strlength = 1;
         }
     }
     my @roles = @{$self->roles};
@@ -60,7 +57,6 @@ sub table_as_schema_class {
         table         => $table->name,
         class_name    => $class_name,
         has_datetime  => $has_datetime,
-        has_strlength => $has_strlength,
         columns       => $table->columns,
         driver        => $self->driver,
         roles         => scalar(@roles) > 0 ? join(' ', @roles) : "",
@@ -104,13 +100,10 @@ use Moo;
 with qw/<: $roles :>/;
 : }
 use namespace::clean;
-use Types::Standard -types;
+use Types::Common -types;
 : if ($has_datetime) {
 use Types::DateTime -all;
 use DateTime::Format::<: $driver :>;
-: }
-: if ($has_strlength) {
-use Types::Common::String -types;
 : }
 
 our $TABLE = '<: $table :>';

@@ -1,7 +1,7 @@
 package Rarmani::Table;
 use Moo;
 use namespace::clean;
-use Types::Standard -types;
+use Types::Common -types;
 
 has driver      => (is => 'ro', isa => Str, required => 1);
 has name        => (is => 'ro', isa => Str, required => 1);

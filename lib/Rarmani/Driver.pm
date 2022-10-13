@@ -1,7 +1,7 @@
 package Rarmani::Driver;
 use Moo;
 use namespace::clean;
-use Types::Standard -types;
+use Types::Common -types;
 use Rarmani::Driver::MySQL;
 use Rarmani::Driver::SQLite;
 

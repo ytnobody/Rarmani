@@ -1,8 +1,7 @@
 package Rarmani::Column;
 use Moo;
 use namespace::clean;
-use Types::Standard -types;
-use Types::Common::Numeric -types;
+use Types::Common -types;
 use Text::Xslate;
 
 has driver      => (is => 'ro', isa => Str, required => 1);

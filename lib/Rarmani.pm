@@ -1,7 +1,7 @@
 package Rarmani;
 use Moo;
 use namespace::clean;
-use Types::Standard -types;
+use Types::Common -types;
 use Rarmani::Parser;
 use Rarmani::Generator;
 
