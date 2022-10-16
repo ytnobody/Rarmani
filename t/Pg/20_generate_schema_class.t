@@ -17,11 +17,11 @@ use_ok 'MyCoolApp::Schema::Orders';
 
 my $order = MyCoolApp::Schema::Orders->new();
 can_ok $order, qw/order_id order_date quantity notes TO_JSON/;
-lives_ok  { $order->id(100) };
-throws_ok { $order->id('postgresql') } qr/did not pass type constraint/;
-throws_ok { $order->id('') } qr/did not pass type constraint/;
+lives_ok  { $order->order_id(100) };
+throws_ok { $order->order_id('postgresql') } qr/did not pass type constraint/;
+throws_ok { $order->order_id('') } qr/did not pass type constraint/;
 lives_ok  { $order->order_date('2022-09-10') };
-lives_ok  { $order->order_date('2022/09/10') };
+throws_ok { $order->order_date('2022/09/10') } qr/did not pass type constraint/;
 my $now = DateTime->now;
 lives_ok  { $order->order_date($now) };
 lives_ok  { $order->quantity(20) };

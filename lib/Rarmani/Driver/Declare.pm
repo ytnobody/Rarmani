@@ -6,7 +6,7 @@ use Carp ();
 our @EXPORT = qw(build_column_params column_definition_rule type_match column_match skip_name);
 
 my @TypesMatcher = ();
-my $ColumnDefinitionRule = qr/^ +(?<name>`?[\w_]+`?) *(?<datatype>[\w\)\(0-9]+)? *(?<options>[\w_ ]+)? *,?/ims;
+my $ColumnDefinitionRule = qr/^ +(?<name>`?[\w_]+`?) *(?<datatype>[\w\(0-9\)]+)? *(?<options>[\w_ ]+)? *,?/ims;
 my @SkipNames = qw(PRIMARY UNIQUE INDEX CONSTRAINT);
 
 sub type_match ($$) {

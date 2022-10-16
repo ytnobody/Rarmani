@@ -9,6 +9,7 @@ requires 'DateTime::Format::SQLite', '0.11';
 requires 'DateTime::Format::Pg', '0.16014';
 requires 'Text::Xslate', 'v3.5.9';
 requires 'String::CamelCase', '0.04';
+requires 'Class::Load', '0.25';
 
 on 'test' => sub {
     requires 'Test::More', '0.98';

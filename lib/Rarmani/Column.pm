@@ -44,7 +44,7 @@ EOS
 
 sub as_column_type {
     my ($self) = @_;
-    return sprintf("%s[1,%d] | Undef", $self->datatype->name, $self->length) if $self->length > 0;
+    return sprintf("%s[0,%d] | Undef", $self->datatype->name, $self->length) if $self->length > 0;
     return sprintf("%s->plus_coercions(Format['%s']) | Undef", $self->datatype->name, $self->driver) if $self->datatype->name eq 'DateTime';
     return sprintf("%s | Undef", $self->datatype->name);
 }

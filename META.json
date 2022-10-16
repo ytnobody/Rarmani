@@ -42,6 +42,7 @@
       },
       "runtime" : {
          "requires" : {
+            "Class::Load" : "0.25",
             "DateTime::Format::MySQL" : "0.0701",
             "DateTime::Format::Pg" : "0.16014",
             "DateTime::Format::SQLite" : "0.11",
