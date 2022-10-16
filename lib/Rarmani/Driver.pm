@@ -4,6 +4,7 @@ use namespace::clean;
 use Types::Common -types;
 use Rarmani::Driver::MySQL;
 use Rarmani::Driver::SQLite;
+use Rarmani::Driver::Pg;
 
 has driver_type => (is => 'ro', isa => Str, required => 1);
 

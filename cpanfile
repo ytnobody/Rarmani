@@ -6,6 +6,7 @@ requires 'Type::Tiny', '2.000001';
 requires 'Types::DateTime', '0.0002';
 requires 'DateTime::Format::MySQL', '0.0701';
 requires 'DateTime::Format::SQLite', '0.11';
+requires 'DateTime::Format::Pg', '0.16014';
 requires 'Text::Xslate', 'v3.5.9';
 requires 'String::CamelCase', '0.04';
 
