@@ -2,10 +2,17 @@ package Rarmani::Driver;
 use Moo;
 use namespace::clean;
 use Types::Common -types;
-use Rarmani::Driver::MySQL;
-use Rarmani::Driver::SQLite;
+use Class::Load ();
 
 has driver_type => (is => 'ro', isa => Str, required => 1);
+
+around new => sub {
+    my ($orig, $class, %params) = @_;
+    my $self = $class->$orig(%params);
+    my $driver_class = 'Rarmani::Driver::'. $self->driver_type;
+    Class::Load::load_class($driver_class);
+    return $self;
+};
 
 sub driver_class {
     my ($self, $coldata) = @_;
