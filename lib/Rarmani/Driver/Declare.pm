@@ -22,9 +22,9 @@ sub column_match ($) {
     $ColumnDefinitionRule = $rule;
 }
 
-sub skip_name ($) {
-    my ($name) = @_;
-    push @SkipNames, $name;
+sub skip_name (@) {
+    my @names = @_;
+    push @SkipNames, @names;
 }
 
 sub column_definition_rule {
