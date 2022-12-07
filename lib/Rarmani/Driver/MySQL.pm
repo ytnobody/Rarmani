@@ -13,4 +13,5 @@ type_match DateTime,      qr/^(DATE|DATETIME|TIMESTAMP|YEAR)/;
 type_match Enum,          qr/^(ENUM([\(\).+]+)$)/;
 type_match ArrayRef[Str], qr/^(SET([\(\).+]+))/;
 
+skip_name qw/KEY UNIQUE PRIMARY/;
 1;
